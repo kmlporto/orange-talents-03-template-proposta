@@ -1,5 +1,6 @@
 package br.com.zup.desafios.proposta.proposta;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,6 +25,9 @@ public class PropostaController {
 
     @PostMapping
     public ResponseEntity<URI> cadastra(@Valid @RequestBody PropostaPersist propostaPersist){
+        if(propostaRepository.existsByDocumento(propostaPersist.getDocumento()))
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
+
         Proposta proposta = propostaRepository.save(propostaPersist.convert());
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(proposta.getId()).toUri();

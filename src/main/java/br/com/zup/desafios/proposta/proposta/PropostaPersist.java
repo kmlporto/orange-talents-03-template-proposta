@@ -1,7 +1,6 @@
 package br.com.zup.desafios.proposta.proposta;
 
 import br.com.zup.desafios.proposta.utils.annotation.DocumentValid;
-import br.com.zup.desafios.proposta.utils.annotation.Unique;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -12,7 +11,6 @@ import java.math.BigDecimal;
 public class PropostaPersist {
     @NotEmpty
     @DocumentValid
-    @Unique(clazz = Proposta.class, field = "documento")
     private String documento;
     @NotEmpty
     @Email
@@ -34,4 +32,7 @@ public class PropostaPersist {
         return new Proposta(documento, email, endereco, salarioBruto);
     }
 
+    public String getDocumento() {
+        return documento;
+    }
 }
