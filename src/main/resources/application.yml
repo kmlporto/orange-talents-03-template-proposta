@@ -8,4 +8,18 @@ spring:
     driverClassName: org.h2.Driver
     username: sa
     password:
+  jpa:
+    properties:
+      javax:
+        persistence:
+          query:
+            timout: 50
+feign:
+  client:
+    config:
+      solicitacao:
+        read-timeout: 100
+        connect-timeout: 100
 
+externo:
+  solicitacao: ${SOLICITACOES_URL:http://localhost:9999/api/solicitacao}

@@ -10,6 +10,8 @@ import java.math.BigDecimal;
 
 public class PropostaPersist {
     @NotEmpty
+    private String nome;
+    @NotEmpty
     @DocumentValid
     private String documento;
     @NotEmpty
@@ -21,7 +23,8 @@ public class PropostaPersist {
     @Positive
     private BigDecimal salarioBruto;
 
-    public PropostaPersist(@NotEmpty String documento, @NotEmpty String email, @NotEmpty String endereco, @NotNull @Positive BigDecimal salarioBruto) {
+    public PropostaPersist(@NotEmpty String nome, @NotEmpty String documento, @NotEmpty String email, @NotEmpty String endereco, @NotNull @Positive BigDecimal salarioBruto, @NotEmpty String analise) {
+        this.nome = nome;
         this.documento = documento;
         this.email = email;
         this.endereco = endereco;
@@ -29,7 +32,7 @@ public class PropostaPersist {
     }
 
     public Proposta convert() {
-        return new Proposta(documento, email, endereco, salarioBruto);
+        return new Proposta(nome, documento, email, endereco, salarioBruto);
     }
 
     public String getDocumento() {

@@ -1,7 +1,13 @@
 package br.com.zup.desafios.proposta.proposta;
 
+import br.com.zup.desafios.proposta.externo.solicitacao.SolicitacaoClient;
+import br.com.zup.desafios.proposta.externo.solicitacao.SolicitacaoRequest;
+import br.com.zup.desafios.proposta.externo.solicitacao.SolicitacaoResponse;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,6 +21,8 @@ public class Proposta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false)
+    private String nome;
     @Column(nullable = false, unique = true)
     private String documento;
     @Column(nullable = false)
@@ -23,12 +31,15 @@ public class Proposta {
     private String endereco;
     @Column(nullable = false)
     private BigDecimal salarioBruto;
+    @Enumerated(value = EnumType.STRING)
+    private PropostaStatus status;
 
     @Deprecated
     public Proposta() {
     }
 
-    public Proposta(@NotEmpty String documento, @NotEmpty String email, @NotEmpty String endereco, @NotNull @Positive BigDecimal salarioBruto) {
+    public Proposta(@NotEmpty String nome, @NotEmpty String documento, @NotEmpty String email, @NotEmpty String endereco, @NotNull @Positive BigDecimal salarioBruto) {
+        this.nome = nome;
         this.documento = documento;
         this.email = email;
         this.endereco = endereco;
@@ -37,5 +48,22 @@ public class Proposta {
 
     public Long getId() {
         return this.id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getDocumento() {
+        return documento;
+    }
+
+    public Proposta solicita(SolicitacaoClient solicitacaoClient, PropostaRepository propostaRepository) {
+        SolicitacaoRequest request = new SolicitacaoRequest(id, nome, documento);
+        SolicitacaoResponse response = solicitacaoClient.consultaSolicitacao(request);
+
+        status = response.getResultadoSolicitacao().convert();
+
+        return propostaRepository.save(this);
     }
 }
