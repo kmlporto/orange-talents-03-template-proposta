@@ -20,6 +20,9 @@ feign:
       solicitacao:
         read-timeout: 100
         connect-timeout: 100
-
+management:
+  endpoint:
+    health:
+      show-details: always
 externo:
   solicitacao: ${SOLICITACOES_URL:http://localhost:9999/api/solicitacao}
