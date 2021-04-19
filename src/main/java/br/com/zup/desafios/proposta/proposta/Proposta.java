@@ -1,16 +1,11 @@
 package br.com.zup.desafios.proposta.proposta;
 
+import br.com.zup.desafios.proposta.cartao.Cartao;
 import br.com.zup.desafios.proposta.externo.solicitacao.SolicitacaoClient;
 import br.com.zup.desafios.proposta.externo.solicitacao.SolicitacaoRequest;
 import br.com.zup.desafios.proposta.externo.solicitacao.SolicitacaoResponse;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -33,6 +28,8 @@ public class Proposta {
     private BigDecimal salarioBruto;
     @Enumerated(value = EnumType.STRING)
     private PropostaStatus status;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Cartao cartao;
 
     @Deprecated
     public Proposta() {
@@ -65,5 +62,9 @@ public class Proposta {
         status = response.getResultadoSolicitacao().convert();
 
         return propostaRepository.save(this);
+    }
+
+    public void addCartao(Cartao cartao) {
+        this.cartao = cartao;
     }
 }
