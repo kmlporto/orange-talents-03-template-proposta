@@ -20,6 +20,13 @@ public class CartaoResponse {
     private Vencimento vencimento;
     private String idProposta;
 
+    public CartaoResponse(Cartao cartao) {
+        this.id = cartao.getIdExterno();
+        this.emitidoEm = cartao.getEmitidoEm();
+        this.titular = cartao.getTitular();
+        this.limite = cartao.getLimite();
+    }
+
     public CartaoResponse() {
     }
 
@@ -67,6 +74,9 @@ public class CartaoResponse {
         return idProposta;
     }
 
+    public static CartaoResponse convert(Cartao cartao){
+        return new CartaoResponse(cartao);
+    }
     public Cartao convert(){
         return new Cartao(id, emitidoEm, titular, limite);
     }

@@ -55,6 +55,26 @@ public class Proposta {
         return documento;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public BigDecimal getSalarioBruto() {
+        return salarioBruto;
+    }
+
+    public PropostaStatus getStatus() {
+        return status;
+    }
+
+    public Cartao getCartao() {
+        return cartao;
+    }
+
     public Proposta solicita(SolicitacaoClient solicitacaoClient, PropostaRepository propostaRepository) {
         SolicitacaoRequest request = new SolicitacaoRequest(id, nome, documento);
         SolicitacaoResponse response = solicitacaoClient.consultaSolicitacao(request);

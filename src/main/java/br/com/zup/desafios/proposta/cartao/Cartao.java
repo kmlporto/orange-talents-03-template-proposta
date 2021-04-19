@@ -17,6 +17,26 @@ public class Cartao {
     private String titular;
     private BigDecimal limite;
 
+    public Long getId() {
+        return id;
+    }
+
+    public String getIdExterno() {
+        return idExterno;
+    }
+
+    public LocalDateTime getEmitidoEm() {
+        return emitidoEm;
+    }
+
+    public String getTitular() {
+        return titular;
+    }
+
+    public BigDecimal getLimite() {
+        return limite;
+    }
+
     public Cartao() {
     }
 
