@@ -38,6 +38,12 @@ public class ErrorValidationHandler {
         return buildResponseEntity(apiError);
     }
 
+    @ExceptionHandler(ApiErrorException.class)
+    public ResponseEntity<ApiError> handle(ApiErrorException apiErrorException) {
+        ApiError apiError = new ApiError(apiErrorException.getHttpStatus(), apiErrorException.getReason());
+        return ResponseEntity.status(apiError.getStatus()).body(apiError);
+    }
+
     private List<String> buildMessagesError(BindingResult bindingResult) {
         List<String> messages = new ArrayList<>();
         bindingResult.getGlobalErrors().forEach(objectError -> messages.add(getErrorMessage(objectError)));
