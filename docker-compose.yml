@@ -8,6 +8,7 @@ services:
     depends_on:
       - contas
       - analise
+      - keycloak
     environment:
       CARTOES_URL: http://contas:8888/api/cartoes
       CARTOES_READ_TIMEOUT: 1000
@@ -15,6 +16,8 @@ services:
       SOLICITACOES_URL: http://analise:9999/api/solicitacao
       SOLICITACOES_READ_TIMEOUT: 1000
       SOLICITACOES_CONNECT_TIMEOUT: 1000
+      KEYCLOAK_ISSUER_URI: http://keycloak:8080/auth/realms/nosso-cartao
+      KEYCLOAK_JWKS_URI: http://keycloak:8080/auth/realms/nosso-cartao/protocol/openid-connect/certs
 
   zookeeper:
     image: "confluentinc/cp-zookeeper:5.2.1"
@@ -75,6 +78,7 @@ services:
       DB_PASSWORD: password
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: Pa55w0rd
+      KEYCLOAK_FRONTEND_URL: http://keycloak:8080/auth
       POSTGRES_PORT_5432_TCP_ADDR: 127.0.0.1
 
   analise:
