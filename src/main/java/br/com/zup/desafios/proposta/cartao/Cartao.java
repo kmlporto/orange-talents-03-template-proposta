@@ -1,7 +1,5 @@
 package br.com.zup.desafios.proposta.cartao;
 
-import br.com.zup.desafios.proposta.cartao.biometria.Biometria;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,6 +26,8 @@ public class Cartao {
     private BigDecimal limite;
     @OneToMany(mappedBy = "cartao", cascade = CascadeType.ALL)
     private List<Biometria> biometrias;
+    @OneToMany(mappedBy = "cartao", cascade = CascadeType.ALL)
+    private List<Bloqueio> bloqueios;
 
     public Long getId() {
         return id;
@@ -49,6 +49,14 @@ public class Cartao {
         return limite;
     }
 
+    public List<Biometria> getBiometrias() {
+        return biometrias;
+    }
+
+    public List<Bloqueio> getBloqueios() {
+        return bloqueios;
+    }
+
     public Cartao() {
     }
 
@@ -58,4 +66,13 @@ public class Cartao {
         this.titular = titular;
         this.limite = limite;
     }
+
+    public boolean bloqueado(){
+        return bloqueios.stream().anyMatch(Bloqueio::isAtivo);
+    }
+
+    public void addBloqueio(Bloqueio bloqueio){
+        this.bloqueios.add(bloqueio);
+    }
+
 }

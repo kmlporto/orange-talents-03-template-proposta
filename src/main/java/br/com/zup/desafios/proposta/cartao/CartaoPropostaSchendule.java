@@ -1,7 +1,6 @@
 package br.com.zup.desafios.proposta.cartao;
 
 import br.com.zup.desafios.proposta.externo.cartao.CartaoClient;
-import br.com.zup.desafios.proposta.externo.cartao.CartaoResponse;
 import br.com.zup.desafios.proposta.proposta.Proposta;
 import br.com.zup.desafios.proposta.proposta.PropostaRepository;
 import br.com.zup.desafios.proposta.proposta.PropostaStatus;
@@ -29,8 +28,7 @@ public class CartaoPropostaSchendule {
 
     private void adicionaCartao(List<Proposta> propostas){
         propostas.forEach(proposta -> {
-            CartaoResponse cartaoCriado = cartaoClient.criaCartao(proposta);
-            Cartao cartao = cartaoCriado.convert();
+            Cartao cartao = cartaoClient.criaCartao(proposta);
             proposta.addCartao(cartao);
 
             propostaRepository.save(proposta);

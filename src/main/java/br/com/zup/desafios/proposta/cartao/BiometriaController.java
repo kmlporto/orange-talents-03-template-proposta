@@ -1,7 +1,5 @@
-package br.com.zup.desafios.proposta.cartao.biometria;
+package br.com.zup.desafios.proposta.cartao;
 
-import br.com.zup.desafios.proposta.cartao.Cartao;
-import br.com.zup.desafios.proposta.cartao.CartaoRepository;
 import br.com.zup.desafios.proposta.config.handler.ApiErrorException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

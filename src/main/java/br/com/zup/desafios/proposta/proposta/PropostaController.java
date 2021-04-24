@@ -43,6 +43,8 @@ public class PropostaController {
 
     @GetMapping(value = ID)
     public ResponseEntity<PropostaResponse> consulta(@PathVariable Long id){
+        if(!propostaRepository.existsById(id))
+            return ResponseEntity.notFound().build();
         Proposta proposta = propostaRepository.getOne(id);
 
         return ResponseEntity.ok(PropostaResponse.convert(proposta));

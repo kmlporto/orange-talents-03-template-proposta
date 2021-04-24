@@ -1,17 +1,19 @@
 package br.com.zup.desafios.proposta.externo.cartao;
 
 import br.com.zup.desafios.proposta.cartao.Cartao;
+import br.com.zup.desafios.proposta.cartao.Bloqueio;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CartaoResponse {
     private String id;
     private LocalDateTime emitidoEm;
     private String titular;
-    private List<Bloqueio> bloqueios;
+    private List<BloqueioResponse> bloqueios;
     private List<Aviso> avisos;
     private List<Carteira> carteiras;
     private List<Parcela> parcelas;
@@ -25,6 +27,18 @@ public class CartaoResponse {
         this.emitidoEm = cartao.getEmitidoEm();
         this.titular = cartao.getTitular();
         this.limite = cartao.getLimite();
+        this.bloqueios = getBloqueiosResponse(cartao);
+    }
+
+    private List<BloqueioResponse> getBloqueiosResponse(Cartao cartao){
+        List<BloqueioResponse> responseList = new ArrayList<>();
+        if(!cartao.getBloqueios().isEmpty()){
+            cartao.getBloqueios().forEach(bloqueio -> {
+                BloqueioResponse response = new BloqueioResponse(bloqueio);
+                responseList.add(response);
+            });
+        }
+        return responseList;
     }
 
     public CartaoResponse() {
@@ -42,7 +56,7 @@ public class CartaoResponse {
         return titular;
     }
 
-    public List<Bloqueio> getBloqueios() {
+    public List<BloqueioResponse> getBloqueios() {
         return bloqueios;
     }
 
@@ -82,14 +96,26 @@ public class CartaoResponse {
     }
 }
 
-class Bloqueio{
+class BloqueioResponse {
     private String id;
+    private Long idInterno;
     private LocalDateTime bloqueadoEm;
     private String sistemaResponsavel;
     private boolean ativo;
 
+    public BloqueioResponse(Bloqueio bloqueio) {
+        this.idInterno = bloqueio.getId();
+        this.bloqueadoEm = bloqueio.getBloqueadoEm();
+        this.sistemaResponsavel = bloqueio.getResponsavel();
+        this.ativo = bloqueio.isAtivo();
+    }
+
     public String getId() {
         return id;
+    }
+
+    public Long getIdInterno() {
+        return idInterno;
     }
 
     public LocalDateTime getBloqueadoEm() {
@@ -104,7 +130,7 @@ class Bloqueio{
         return ativo;
     }
 
-    public Bloqueio() {
+    public BloqueioResponse() {
     }
 }
 

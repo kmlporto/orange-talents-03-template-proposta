@@ -1,6 +1,4 @@
-package br.com.zup.desafios.proposta.cartao.biometria;
-
-import br.com.zup.desafios.proposta.cartao.Cartao;
+package br.com.zup.desafios.proposta.cartao;
 
 import javax.validation.constraints.NotEmpty;
 import java.util.Base64;

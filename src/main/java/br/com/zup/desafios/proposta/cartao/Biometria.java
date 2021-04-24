@@ -1,4 +1,4 @@
-package br.com.zup.desafios.proposta.cartao.biometria;
+package br.com.zup.desafios.proposta.cartao;
 
 import br.com.zup.desafios.proposta.cartao.Cartao;
 
