@@ -10,11 +10,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.Objects;
 
 import static br.com.zup.desafios.proposta.utils.Path.AVISO;
+import static br.com.zup.desafios.proposta.utils.Path.BIOMETRIA;
 import static br.com.zup.desafios.proposta.utils.Path.BLOQUEIO;
 import static br.com.zup.desafios.proposta.utils.Path.CARTAO;
 
@@ -24,10 +27,12 @@ public class CartaoController {
 
     private final CartaoRepository cartaoRepository;
     private final CartaoClient cartaoClient;
+    private final BiometriaRepository biometriaRepository;
 
-    public CartaoController(CartaoRepository cartaoRepository, CartaoClient cartaoClient) {
+    public CartaoController(CartaoRepository cartaoRepository, CartaoClient cartaoClient, BiometriaRepository biometriaRepository) {
         this.cartaoRepository = cartaoRepository;
         this.cartaoClient = cartaoClient;
+        this.biometriaRepository = biometriaRepository;
     }
 
     @PostMapping(value = BLOQUEIO)
@@ -66,5 +71,19 @@ public class CartaoController {
 
         return ResponseEntity.ok().build();
 
+    }
+
+    @PostMapping(value = BIOMETRIA)
+    public ResponseEntity<?> cadastra(@PathVariable String id, @Valid @RequestBody BiometriaPersist biometriaPersist){
+        if(!cartaoRepository.existsByIdExterno(id)){
+            return ResponseEntity.notFound().build();
+        }
+        Cartao cartao = cartaoRepository.findByIdExterno(id);
+
+        Biometria biometria = biometriaRepository.save(biometriaPersist.convert(cartao));
+
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(biometria.getId()).toUri();
+        return ResponseEntity.created(uri).build();
     }
 }
