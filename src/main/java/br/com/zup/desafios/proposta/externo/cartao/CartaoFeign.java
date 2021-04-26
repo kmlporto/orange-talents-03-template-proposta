@@ -6,15 +6,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import static br.com.zup.desafios.proposta.utils.Path.BLOQUEIO;
-import static br.com.zup.desafios.proposta.utils.Path.ID;
 
 @FeignClient(url = "${externo.cartao}", name="cartao")
 public interface CartaoFeign {
 
     @PostMapping
-    CartaoResponse criaCartao(NovoCartaoRequest novoCartaoRequest);
+    NovoCartaoResponse criaCartao(NovoCartaoRequest novoCartaoRequest);
 
-    @PostMapping(value = ID + BLOQUEIO)
-    BloqueioCartaoResponse bloqueaCartao(@PathVariable String id, @RequestBody BloqueioCartaoRequest request);
+    @PostMapping(value = BLOQUEIO)
+    CartaoResponse bloqueaCartao(@PathVariable String id, @RequestBody BloqueioCartaoRequest request);
 
 }

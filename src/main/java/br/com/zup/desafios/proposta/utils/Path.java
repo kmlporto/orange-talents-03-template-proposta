@@ -6,8 +6,6 @@ public class Path {
     public final static String PROPOSTA = API + "/propostas";
     public final static String CARTAO = API + "/cartoes";
     public final static String CARTAO_BIOMETRIA = CARTAO + ID + "/biometrias";
-    public final static String BLOQUEIO = "/bloqueios";
-    public final static String CARTAO_BLOQUEIO = CARTAO + ID + BLOQUEIO;
-    public final static String AVISO = "/avisos";
-    public final static String CARTAO_AVISO = CARTAO + ID + AVISO;
+    public final static String BLOQUEIO = ID + "/bloqueios";
+    public final static String AVISO = ID + "/avisos";
 }

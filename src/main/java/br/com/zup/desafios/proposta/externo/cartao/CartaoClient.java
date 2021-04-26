@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.FeignException;
 import org.springframework.stereotype.Component;
 
-import static br.com.zup.desafios.proposta.externo.cartao.BloqueioStatus.BLOQUEADO;
+import static br.com.zup.desafios.proposta.externo.cartao.RespostaStatus.BLOQUEADO;
 
 @Component
 public class CartaoClient {
@@ -23,25 +23,25 @@ public class CartaoClient {
 
     public Cartao criaCartao(Proposta proposta){
         NovoCartaoRequest request = new NovoCartaoRequest(proposta.getId(), proposta.getNome(), proposta.getDocumento());
-        CartaoResponse cartaoCriado = cartaoFeign.criaCartao(request);
+        NovoCartaoResponse cartaoCriado = cartaoFeign.criaCartao(request);
 
         return cartaoCriado.convert();
     }
 
     public Bloqueio bloqueiaCartao(Cartao cartao, String responsavel){
-        BloqueioCartaoResponse bloqueioCartaoResponse = null;
+        CartaoResponse cartaoResponse = null;
 
         try {
-            bloqueioCartaoResponse = cartaoFeign.bloqueaCartao(cartao.getIdExterno(), new BloqueioCartaoRequest(responsavel));
+            cartaoResponse = cartaoFeign.bloqueaCartao(cartao.getIdExterno(), new BloqueioCartaoRequest(responsavel));
         }catch (FeignException.UnprocessableEntity exception){
             try{
                 String body = exception.contentUTF8();
-                bloqueioCartaoResponse = objectMapper.readValue(body, BloqueioCartaoResponse.class);
+                cartaoResponse = objectMapper.readValue(body, CartaoResponse.class);
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }
         }
-        if(bloqueioCartaoResponse.getResultado().equals(BLOQUEADO)){
+        if(cartaoResponse.getResultado().equals(BLOQUEADO)){
             return new Bloqueio(responsavel, cartao);
         }
         return null;
