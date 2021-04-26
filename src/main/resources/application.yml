@@ -40,6 +40,19 @@ management:
   endpoint:
     health:
       show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: metrics, health, prometheus
+    prometheus:
+      enable: true
+  metrics:
+    export:
+      prometheus:
+        enable: true
+    tags:
+      aplicacao: ${NOME_DA_APLICACAO:proposta}
+      ambiente: ${AMBIENTE:dev}
 externo:
   solicitacao: ${SOLICITACOES_URL:http://localhost:9999/api/solicitacao}
   cartao: ${CARTOES_URL:http://localhost:8888/api/cartoes}
