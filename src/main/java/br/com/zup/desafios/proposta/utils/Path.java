@@ -8,4 +8,6 @@ public class Path {
     public final static String CARTAO_BIOMETRIA = CARTAO + ID + "/biometrias";
     public final static String BLOQUEIO = "/bloqueios";
     public final static String CARTAO_BLOQUEIO = CARTAO + ID + BLOQUEIO;
+    public final static String AVISO = "/avisos";
+    public final static String CARTAO_AVISO = CARTAO + ID + AVISO;
 }

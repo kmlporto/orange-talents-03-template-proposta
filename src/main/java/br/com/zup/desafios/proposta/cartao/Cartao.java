@@ -32,6 +32,8 @@ public class Cartao {
     private List<Biometria> biometrias;
     @OneToMany(mappedBy = "cartao", cascade = CascadeType.ALL)
     private List<Bloqueio> bloqueios;
+    @OneToMany(mappedBy = "cartao", cascade = CascadeType.ALL)
+    private List<AvisoViagem> avisosViagem;
 
     public Long getId() {
         return id;
@@ -79,6 +81,10 @@ public class Cartao {
     public void addBloqueio(Bloqueio bloqueio){
         this.statusCartao = StatusCartao.BLOQUEADO;
         this.bloqueios.add(bloqueio);
+    }
+
+    public void addAviso(AvisoViagem avisoViagem){
+        this.avisosViagem.add(avisoViagem);
     }
 
 }
