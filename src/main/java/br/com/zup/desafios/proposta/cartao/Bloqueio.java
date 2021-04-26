@@ -1,7 +1,5 @@
 package br.com.zup.desafios.proposta.cartao;
 
-import br.com.zup.desafios.proposta.cartao.Cartao;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

@@ -3,6 +3,8 @@ package br.com.zup.desafios.proposta.cartao;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,6 +26,8 @@ public class Cartao {
     private String titular;
     @Column(nullable = false)
     private BigDecimal limite;
+    @Enumerated(EnumType.STRING)
+    private StatusCartao statusCartao;
     @OneToMany(mappedBy = "cartao", cascade = CascadeType.ALL)
     private List<Biometria> biometrias;
     @OneToMany(mappedBy = "cartao", cascade = CascadeType.ALL)
@@ -63,6 +67,7 @@ public class Cartao {
     public Cartao(String idExterno, LocalDateTime emitidoEm, String titular, BigDecimal limite) {
         this.idExterno = idExterno;
         this.emitidoEm = emitidoEm;
+        this.statusCartao = StatusCartao.CRIADO;
         this.titular = titular;
         this.limite = limite;
     }
@@ -72,6 +77,7 @@ public class Cartao {
     }
 
     public void addBloqueio(Bloqueio bloqueio){
+        this.statusCartao = StatusCartao.BLOQUEADO;
         this.bloqueios.add(bloqueio);
     }
 
