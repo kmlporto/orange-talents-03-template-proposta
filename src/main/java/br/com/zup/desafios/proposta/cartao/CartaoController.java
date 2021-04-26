@@ -58,13 +58,16 @@ public class CartaoController {
     }
 
     @PostMapping(value = AVISO)
-    public ResponseEntity<?> aviso(@PathVariable String id, @Valid @RequestBody AvisoViagemPersist avisoViagemPersist, @RequestHeader("User-Agent") String userAgent, @RequestHeader("ip-client") String ipClient){
+    public ResponseEntity<?> cadastraAviso(@PathVariable String id, @Valid @RequestBody AvisoViagemPersist avisoViagemPersist, @RequestHeader("User-Agent") String userAgent, @RequestHeader("ip-client") String ipClient){
         if(!cartaoRepository.existsByIdExterno(id)){
             return ResponseEntity.notFound().build();
         }
         Cartao cartao = cartaoRepository.findByIdExterno(id);
 
-        AvisoViagem aviso = new AvisoViagem(cartao, avisoViagemPersist, userAgent, ipClient);
+        AvisoViagem aviso = cartaoClient.criaAvisoViagemCartao(cartao, avisoViagemPersist, userAgent, ipClient);
+        if(Objects.isNull(aviso))
+            throw new ApiErrorException(HttpStatus.UNPROCESSABLE_ENTITY, "Não foi possível adicionar aviso de viagem");
+
         cartao.addAviso(aviso);
 
         cartaoRepository.save(cartao);
@@ -74,7 +77,7 @@ public class CartaoController {
     }
 
     @PostMapping(value = BIOMETRIA)
-    public ResponseEntity<?> cadastra(@PathVariable String id, @Valid @RequestBody BiometriaPersist biometriaPersist){
+    public ResponseEntity<?> cadastraBiometria(@PathVariable String id, @Valid @RequestBody BiometriaPersist biometriaPersist){
         if(!cartaoRepository.existsByIdExterno(id)){
             return ResponseEntity.notFound().build();
         }
