@@ -1,7 +1,5 @@
 package br.com.zup.desafios.proposta.proposta;
 
-import br.com.zup.desafios.proposta.externo.cartao.NovoCartaoResponse;
-
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -13,7 +11,7 @@ public class PropostaResponse {
     private String endereco;
     private BigDecimal salarioBruto;
     private PropostaStatus status;
-    private NovoCartaoResponse cartao;
+    private PropostaCartaoResponse cartao;
 
     public PropostaResponse(@NotNull Proposta proposta) {
         this.nome = proposta.getNome();
@@ -22,7 +20,7 @@ public class PropostaResponse {
         this.endereco = proposta.getEndereco();
         this.salarioBruto = proposta.getSalarioBruto();
         this.status = proposta.getStatus();
-        this.cartao = Objects.isNull(proposta.getCartao()) ? null : NovoCartaoResponse.convert(proposta.getCartao());
+        this.cartao = Objects.isNull(proposta.getCartao()) ? null : PropostaCartaoResponse.convert(proposta.getCartao());
     }
 
     public static PropostaResponse convert(Proposta proposta){
@@ -53,7 +51,7 @@ public class PropostaResponse {
         return status;
     }
 
-    public NovoCartaoResponse getCartao() {
+    public PropostaCartaoResponse getCartao() {
         return cartao;
     }
 }

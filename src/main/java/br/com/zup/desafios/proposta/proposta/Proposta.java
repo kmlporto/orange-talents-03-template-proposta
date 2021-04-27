@@ -1,7 +1,6 @@
 package br.com.zup.desafios.proposta.proposta;
 
 import br.com.zup.desafios.proposta.cartao.Cartao;
-import br.com.zup.desafios.proposta.externo.solicitacao.SolicitacaoClient;
 import br.com.zup.desafios.proposta.externo.solicitacao.SolicitacaoRequest;
 import br.com.zup.desafios.proposta.externo.solicitacao.SolicitacaoResponse;
 

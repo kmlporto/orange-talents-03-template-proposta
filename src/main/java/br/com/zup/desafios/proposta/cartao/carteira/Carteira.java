@@ -1,6 +1,6 @@
-package br.com.zup.desafios.proposta.cartao;
+package br.com.zup.desafios.proposta.cartao.carteira;
 
-import br.com.zup.desafios.proposta.externo.cartao.CarteiraCartaoRequest;
+import br.com.zup.desafios.proposta.cartao.Cartao;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

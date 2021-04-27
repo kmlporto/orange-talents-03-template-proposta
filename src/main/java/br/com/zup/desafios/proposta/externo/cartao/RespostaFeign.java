@@ -1,5 +1,5 @@
 package br.com.zup.desafios.proposta.externo.cartao;
 
-public enum RespostaStatus {
+public enum RespostaFeign {
     FALHA, BLOQUEADO, CRIADO, ASSOCIADA;
 }

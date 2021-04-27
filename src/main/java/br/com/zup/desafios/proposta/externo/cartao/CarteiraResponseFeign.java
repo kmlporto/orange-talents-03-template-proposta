@@ -1,18 +1,18 @@
 package br.com.zup.desafios.proposta.externo.cartao;
 
-public class CarteiraCartaoResponse {
+public class CarteiraResponseFeign {
 
-    private RespostaStatus resultado;
+    private RespostaFeign resultado;
     private String id;
 
-    public CarteiraCartaoResponse() {
+    public CarteiraResponseFeign() {
     }
 
-    public RespostaStatus getResultado() {
+    public RespostaFeign getResultado() {
         return resultado;
     }
 
-    public void setResultado(RespostaStatus resultado) {
+    public void setResultado(RespostaFeign resultado) {
         this.resultado = resultado;
     }
 

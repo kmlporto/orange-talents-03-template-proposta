@@ -1,8 +1,9 @@
-package br.com.zup.desafios.proposta.cartao;
+package br.com.zup.desafios.proposta.cartao.carteira;
 
+import br.com.zup.desafios.proposta.cartao.Cartao;
+import br.com.zup.desafios.proposta.cartao.CartaoRepository;
 import br.com.zup.desafios.proposta.config.handler.ApiErrorException;
-import br.com.zup.desafios.proposta.externo.cartao.CartaoClient;
-import br.com.zup.desafios.proposta.externo.cartao.CarteiraCartaoRequest;
+import br.com.zup.desafios.proposta.cartao.CartaoClient;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;

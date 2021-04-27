@@ -1,4 +1,4 @@
-package br.com.zup.desafios.proposta.cartao;
+package br.com.zup.desafios.proposta.cartao.aviso;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;

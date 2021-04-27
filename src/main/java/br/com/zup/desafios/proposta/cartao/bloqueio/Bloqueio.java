@@ -1,4 +1,6 @@
-package br.com.zup.desafios.proposta.cartao;
+package br.com.zup.desafios.proposta.cartao.bloqueio;
+
+import br.com.zup.desafios.proposta.cartao.Cartao;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

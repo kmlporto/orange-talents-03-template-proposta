@@ -1,5 +1,10 @@
 package br.com.zup.desafios.proposta.cartao;
 
+import br.com.zup.desafios.proposta.cartao.aviso.AvisoViagem;
+import br.com.zup.desafios.proposta.cartao.biometria.Biometria;
+import br.com.zup.desafios.proposta.cartao.bloqueio.Bloqueio;
+import br.com.zup.desafios.proposta.cartao.carteira.Carteira;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;

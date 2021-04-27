@@ -5,7 +5,7 @@ import br.com.zup.desafios.proposta.utils.annotation.DocumentValid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-public class NovoCartaoRequest {
+public class NovoCartaoRequestFeign {
     @NotNull
     private Long idProposta;
     @NotEmpty
@@ -14,7 +14,7 @@ public class NovoCartaoRequest {
     @DocumentValid
     private String documento;
 
-    public NovoCartaoRequest(@NotNull Long idProposta, @NotEmpty String nome, @NotEmpty String documento) {
+    public NovoCartaoRequestFeign(@NotNull Long idProposta, @NotEmpty String nome, @NotEmpty String documento) {
         this.idProposta = idProposta;
         this.nome = nome;
         this.documento = documento;

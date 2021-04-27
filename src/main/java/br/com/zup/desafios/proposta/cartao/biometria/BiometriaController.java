@@ -1,5 +1,7 @@
-package br.com.zup.desafios.proposta.cartao;
+package br.com.zup.desafios.proposta.cartao.biometria;
 
+import br.com.zup.desafios.proposta.cartao.Cartao;
+import br.com.zup.desafios.proposta.cartao.CartaoRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +17,7 @@ import static br.com.zup.desafios.proposta.utils.Path.BIOMETRIA;
 import static br.com.zup.desafios.proposta.utils.Path.CARTAO;
 
 @RestController
-@RequestMapping(value = CARTAO)
+@RequestMapping(value = CARTAO + BIOMETRIA)
 public class BiometriaController {
 
     private final CartaoRepository cartaoRepository;
@@ -26,7 +28,7 @@ public class BiometriaController {
         this.biometriaRepository = biometriaRepository;
     }
 
-    @PostMapping(value = BIOMETRIA)
+    @PostMapping
     public ResponseEntity<?> cadastraBiometria(@PathVariable String id, @Valid @RequestBody BiometriaPersist biometriaPersist){
         if(!cartaoRepository.existsByIdExterno(id)){
             return ResponseEntity.notFound().build();

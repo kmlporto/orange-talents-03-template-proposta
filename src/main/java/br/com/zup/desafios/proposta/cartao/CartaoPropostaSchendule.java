@@ -1,6 +1,5 @@
 package br.com.zup.desafios.proposta.cartao;
 
-import br.com.zup.desafios.proposta.externo.cartao.CartaoClient;
 import br.com.zup.desafios.proposta.proposta.Proposta;
 import br.com.zup.desafios.proposta.proposta.PropostaRepository;
 import br.com.zup.desafios.proposta.proposta.PropostaStatus;

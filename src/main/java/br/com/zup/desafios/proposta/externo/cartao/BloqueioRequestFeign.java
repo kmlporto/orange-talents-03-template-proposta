@@ -1,6 +1,6 @@
 package br.com.zup.desafios.proposta.externo.cartao;
 
-public class BloqueioCartaoRequest {
+public class BloqueioRequestFeign {
     private String sistemaResponsavel;
 
     public String getSistemaResponsavel() {
@@ -11,7 +11,7 @@ public class BloqueioCartaoRequest {
         this.sistemaResponsavel = sistemaResponsavel;
     }
 
-    public BloqueioCartaoRequest(String sistemaResponsavel) {
+    public BloqueioRequestFeign(String sistemaResponsavel) {
         this.sistemaResponsavel = sistemaResponsavel;
     }
 }
