@@ -1,17 +1,13 @@
 package br.com.zup.desafios.proposta.externo.cartao;
 
-import br.com.zup.desafios.proposta.cartao.AvisoViagem;
-import br.com.zup.desafios.proposta.cartao.AvisoViagemPersist;
-import br.com.zup.desafios.proposta.cartao.Cartao;
-import br.com.zup.desafios.proposta.cartao.Bloqueio;
+import br.com.zup.desafios.proposta.cartao.*;
 import br.com.zup.desafios.proposta.proposta.Proposta;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.FeignException;
 import org.springframework.stereotype.Component;
 
-import static br.com.zup.desafios.proposta.externo.cartao.RespostaStatus.BLOQUEADO;
-import static br.com.zup.desafios.proposta.externo.cartao.RespostaStatus.CRIADO;
+import static br.com.zup.desafios.proposta.externo.cartao.RespostaStatus.*;
 
 @Component
 public class CartaoClient {
@@ -66,6 +62,24 @@ public class CartaoClient {
         }
         if(cartaoResponse.getResultado().equals(CRIADO)){
             return new AvisoViagem(cartao, avisoViagemPersist, responsavel, ip);
+        }
+        return null;
+    }
+
+    public Carteira criaCarteiraCartao(Cartao cartao, CarteiraCartaoRequest request){
+        CarteiraCartaoResponse response = null;
+        try {
+            response = cartaoFeign.criaCarteira(cartao.getIdExterno(), request);
+        }catch (FeignException.UnprocessableEntity exception){
+            try{
+                String body = exception.contentUTF8();
+                response = objectMapper.readValue(body, CarteiraCartaoResponse.class);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+        }
+        if(response.getResultado().equals(ASSOCIADA)){
+            return new Carteira(cartao, request, response.getId());
         }
         return null;
     }

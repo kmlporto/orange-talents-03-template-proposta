@@ -14,9 +14,9 @@ public class NovoCartaoResponse {
     private LocalDateTime emitidoEm;
     private String titular;
     private List<BloqueioResponse> bloqueios;
-    private List<Aviso> avisos;
-    private List<Carteira> carteiras;
-    private List<Parcela> parcelas;
+    private List<AvisoResponse> avisos;
+    private List<CarteiraResponse> carteiras;
+    private List<ParcelaResponse> parcelas;
     private BigDecimal limite;
     private Renegociacao renegociacao;
     private Vencimento vencimento;
@@ -60,15 +60,15 @@ public class NovoCartaoResponse {
         return bloqueios;
     }
 
-    public List<Aviso> getAvisos() {
+    public List<AvisoResponse> getAvisos() {
         return avisos;
     }
 
-    public List<Carteira> getCarteiras() {
+    public List<CarteiraResponse> getCarteiras() {
         return carteiras;
     }
 
-    public List<Parcela> getParcelas() {
+    public List<ParcelaResponse> getParcelas() {
         return parcelas;
     }
 
@@ -134,7 +134,7 @@ class BloqueioResponse {
     }
 }
 
-class Aviso{
+class AvisoResponse {
     private LocalDate validoAte;
     private String destino;
 
@@ -146,11 +146,11 @@ class Aviso{
         return destino;
     }
 
-    public Aviso() {
+    public AvisoResponse() {
     }
 }
 
-class Carteira{
+class CarteiraResponse {
     private String id;
     private String email;
     private LocalDateTime associadaEm;
@@ -172,10 +172,10 @@ class Carteira{
         return emissor;
     }
 
-    public Carteira() {
+    public CarteiraResponse() {
     }
 }
-class Parcela{
+class ParcelaResponse {
     private String id;
     private int quantidade;
     private BigDecimal valor;
@@ -192,7 +192,7 @@ class Parcela{
         return valor;
     }
 
-    public Parcela() {
+    public ParcelaResponse() {
     }
 }
 

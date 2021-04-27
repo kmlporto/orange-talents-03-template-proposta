@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Cartao {
@@ -34,6 +35,8 @@ public class Cartao {
     private List<Bloqueio> bloqueios;
     @OneToMany(mappedBy = "cartao", cascade = CascadeType.ALL)
     private List<AvisoViagem> avisosViagem;
+    @OneToMany(mappedBy = "cartao", cascade = CascadeType.ALL)
+    private Set<Carteira> carteiras;
 
     public Long getId() {
         return id;

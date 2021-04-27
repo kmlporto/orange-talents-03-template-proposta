@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import static br.com.zup.desafios.proposta.utils.Path.AVISO;
 import static br.com.zup.desafios.proposta.utils.Path.BLOQUEIO;
+import static br.com.zup.desafios.proposta.utils.Path.CARTEIRA;
 
 @FeignClient(url = "${externo.cartao}", name="cartao")
 public interface CartaoFeign {
@@ -20,5 +21,8 @@ public interface CartaoFeign {
 
     @PostMapping(value = AVISO)
     CartaoResponse criaAvisoViagem(@PathVariable String id, @RequestBody AvisoViagemPersist request);
+
+    @PostMapping(value = CARTEIRA)
+    CarteiraCartaoResponse criaCarteira(@PathVariable String id, @RequestBody CarteiraCartaoRequest request);
 
 }
