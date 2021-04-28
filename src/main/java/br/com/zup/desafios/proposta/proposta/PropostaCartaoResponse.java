@@ -21,6 +21,26 @@ public class PropostaCartaoResponse {
         this.limite = cartao.getLimite();
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public String getIdExterno() {
+        return idExterno;
+    }
+
+    public LocalDateTime getEmitidoEm() {
+        return emitidoEm;
+    }
+
+    public String getTitular() {
+        return titular;
+    }
+
+    public BigDecimal getLimite() {
+        return limite;
+    }
+
     public static PropostaCartaoResponse convert(Cartao cartao){
         return new PropostaCartaoResponse(cartao);
     }

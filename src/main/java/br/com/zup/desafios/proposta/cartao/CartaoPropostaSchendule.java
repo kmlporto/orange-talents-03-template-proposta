@@ -20,7 +20,7 @@ public class CartaoPropostaSchendule {
     }
 
     @Scheduled(fixedDelayString = "${periodicidade.schendule.proposta-cartao}")
-    private void operacao() {
+    public void operacao() {
         List<Proposta> propostasLegiveisSemCartao = propostaRepository.findByStatusAndCartaoIsNull(PropostaStatus.ELEGIVEL);
         adicionaCartao(propostasLegiveisSemCartao);
     }
