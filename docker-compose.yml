@@ -18,7 +18,7 @@ services:
       SOLICITACOES_CONNECT_TIMEOUT: 1000
       KEYCLOAK_ISSUER_URI: http://keycloak:8080/auth/realms/nosso-cartao
       KEYCLOAK_JWKS_URI: http://keycloak:8080/auth/realms/nosso-cartao/protocol/openid-connect/certs
-
+      JAEGER_ENDPOINT: http://jaeger:14268/api/traces
   zookeeper:
     image: "confluentinc/cp-zookeeper:5.2.1"
     environment:

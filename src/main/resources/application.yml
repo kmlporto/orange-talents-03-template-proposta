@@ -27,6 +27,10 @@ spring:
         jwt:
           issuer-uri: ${KEYCLOAK_ISSUER_URI:http://localhost:18080/auth/realms/nosso-cartao}
           jwk-set-uri: ${KEYCLOAK_JWKS_URI:http://localhost:18080/auth/realms/nosso-cartao/protocol/openid-connect/certs}
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
 feign:
   client:
     config:
@@ -53,6 +57,18 @@ management:
     tags:
       aplicacao: ${NOME_DA_APLICACAO:proposta}
       ambiente: ${AMBIENTE:dev}
+opentracing:
+  jaeger:
+    enable: ${JAEGER_ENABLED:true}
+    service-name: ${NOME_DA_APLICACAO:proposta}
+    http-sender:
+      url: ${JAEGER_ENDPOINT:http://localhost:14268/api/traces}
+    probabilistic-sampler:
+      sampling-rate: 1
+  spring:
+    cloud:
+      feign:
+        enabled: false
 externo:
   solicitacao: ${SOLICITACOES_URL:http://localhost:9999/api/solicitacao}
   cartao: ${CARTOES_URL:http://localhost:8888/api/cartoes}
