@@ -1,3 +1,0 @@
-INSERT INTO PROPOSTA(nome, documento, email, endereco, salario_bruto, status) values ('Ruan Hugo Lima', '35.573.022/0001-25', 'ruanhugolima-98@slb.com', 'Rua Geórgia, 778 Brooklin Paulista', 3000, 'NAO_ELEGIVEL');
-INSERT INTO PROPOSTA(nome, documento, email, endereco, salario_bruto, status) values ('Kamilly Cecília Manuela', '862.850.009-05', 'mmanuelamaitebrunaduarte@tradevalle.com.br', 'Quadra EQNP 28/32 Bloco G Brooklin Paulista', 6000, 'ELEGIVEL');
-INSERT INTO PROPOSTA(nome, documento, email, endereco, salario_bruto, status) values ('João Luís de Paula', '86.039.854/0001-05', 'jjoaoluisdepaula@cordeiromaquinas.com.br', 'Rua Rubens Lima Barros', 4000, 'ELEGIVEL');

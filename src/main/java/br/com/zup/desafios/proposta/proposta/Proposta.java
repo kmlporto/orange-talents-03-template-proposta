@@ -1,11 +1,13 @@
 package br.com.zup.desafios.proposta.proposta;
 
 import br.com.zup.desafios.proposta.cartao.Cartao;
+import br.com.zup.desafios.proposta.config.security.EncryptorConverter;
 import br.com.zup.desafios.proposta.externo.solicitacao.SolicitacaoRequest;
 import br.com.zup.desafios.proposta.externo.solicitacao.SolicitacaoResponse;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -18,6 +20,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
 
+import static br.com.zup.desafios.proposta.proposta.PropostaStatus.ANALISE;
+
 @Entity
 public class Proposta {
     @Id
@@ -25,6 +29,7 @@ public class Proposta {
     private Long id;
     @Column(nullable = false)
     private String nome;
+    @Convert(converter = EncryptorConverter.class)
     @Column(nullable = false, unique = true)
     private String documento;
     @Column(nullable = false)
@@ -34,7 +39,7 @@ public class Proposta {
     @Column(nullable = false)
     private BigDecimal salarioBruto;
     @Enumerated(value = EnumType.STRING)
-    private PropostaStatus status;
+    private PropostaStatus status = ANALISE;
     @OneToOne(cascade = CascadeType.ALL)
     private Cartao cartao;
 

@@ -6,10 +6,14 @@ services:
     ports:
       - 8080:8080
     depends_on:
+      - postgres
       - contas
       - analise
       - keycloak
     environment:
+      BANCO_URL: postgres:5432/proposta
+      BANCO_USR: keycloak
+      BANCO_PSW: password
       CARTOES_URL: http://contas:8888/api/cartoes
       CARTOES_READ_TIMEOUT: 1000
       CARTOES_CONNECT_TIMEOUT: 1000

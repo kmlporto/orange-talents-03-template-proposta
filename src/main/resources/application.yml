@@ -4,23 +4,17 @@ logging:
       springframework:
         security: TRACE
 spring:
-  h2:
-    console:
-      enabled: true
-      path: /h2
-      settings:
-        web-allow-others: true
   datasource:
-    url: jdbc:h2:mem:proposta
-    driverClassName: org.h2.Driver
-    username: sa
-    password:
+    url: jdbc:postgresql://${BANCO_URL:localhost:5432/proposta}
+    driverClassName: org.postgresql.Driver
+    username: ${BANCO_USR:keycloak}
+    password: ${BANCO_PSW:password}
+    validationQuery: SELECT 1
   jpa:
-    properties:
-      javax:
-        persistence:
-          query:
-            timout: 50
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    show-sql: true
+    hibernate:
+      ddl-auto: update
   security:
     oauth2:
       resourceserver:
@@ -69,6 +63,8 @@ opentracing:
     cloud:
       feign:
         enabled: false
+security:
+  aes-secret: ${SECRET:0123456789abcdef}
 externo:
   solicitacao: ${SOLICITACOES_URL:http://localhost:9999/api/solicitacao}
   cartao: ${CARTOES_URL:http://localhost:8888/api/cartoes}
