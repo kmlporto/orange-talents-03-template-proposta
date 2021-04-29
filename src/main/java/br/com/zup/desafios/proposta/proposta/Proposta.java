@@ -2,6 +2,7 @@ package br.com.zup.desafios.proposta.proposta;
 
 import br.com.zup.desafios.proposta.cartao.Cartao;
 import br.com.zup.desafios.proposta.config.security.EncryptorConverter;
+import br.com.zup.desafios.proposta.externo.solicitacao.SolicitacaoFeign;
 import br.com.zup.desafios.proposta.externo.solicitacao.SolicitacaoRequest;
 import br.com.zup.desafios.proposta.externo.solicitacao.SolicitacaoResponse;
 
@@ -87,9 +88,9 @@ public class Proposta {
         return cartao;
     }
 
-    public Proposta solicita(SolicitacaoClient solicitacaoClient, PropostaRepository propostaRepository) {
+    public Proposta solicita(SolicitacaoFeign solicitacaoFeign, PropostaRepository propostaRepository) {
         SolicitacaoRequest request = new SolicitacaoRequest(id, nome, documento);
-        SolicitacaoResponse response = solicitacaoClient.consultaSolicitacao(request);
+        SolicitacaoResponse response = solicitacaoFeign.consulta(request);
 
         status = response.getResultadoSolicitacao().convert();
 

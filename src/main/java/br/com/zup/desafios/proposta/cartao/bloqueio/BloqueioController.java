@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Objects;
-
 import static br.com.zup.desafios.proposta.utils.Path.BLOQUEIO;
 import static br.com.zup.desafios.proposta.utils.Path.CARTAO;
 
@@ -39,10 +37,8 @@ public class BloqueioController {
         if(cartao.bloqueado()){
             return ResponseEntity.unprocessableEntity().build();
         }
-        Bloqueio bloqueio = cartaoClient.bloqueiaCartao(cartao, userAgent);
-
-        if(Objects.isNull(bloqueio))
-            throw new ApiErrorException(HttpStatus.UNPROCESSABLE_ENTITY, "Cartão não foi bloqueado");
+        Bloqueio bloqueio = cartaoClient.bloqueiaCartao(cartao, userAgent)
+                .orElseThrow(() -> new ApiErrorException(HttpStatus.UNPROCESSABLE_ENTITY, "Cartão não foi bloqueado"));
 
         cartao.addBloqueio(bloqueio);
 

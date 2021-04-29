@@ -13,10 +13,9 @@ import br.com.zup.desafios.proposta.externo.cartao.CarteiraRequestFeign;
 import br.com.zup.desafios.proposta.externo.cartao.NovoCartaoRequestFeign;
 import br.com.zup.desafios.proposta.externo.cartao.NovoCartaoResponseFeign;
 import br.com.zup.desafios.proposta.proposta.Proposta;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import feign.FeignException;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 import static br.com.zup.desafios.proposta.externo.cartao.RespostaFeign.ASSOCIADA;
 import static br.com.zup.desafios.proposta.externo.cartao.RespostaFeign.BLOQUEADO;
@@ -26,11 +25,9 @@ import static br.com.zup.desafios.proposta.externo.cartao.RespostaFeign.CRIADO;
 public class CartaoClient {
 
     private final CartaoFeign cartaoFeign;
-    private final ObjectMapper objectMapper;
 
-    public CartaoClient(CartaoFeign cartaoFeign, ObjectMapper objectMapper) {
+    public CartaoClient(CartaoFeign cartaoFeign) {
         this.cartaoFeign = cartaoFeign;
-        this.objectMapper = objectMapper;
     }
 
     public Cartao criaCartao(Proposta proposta){
@@ -40,60 +37,28 @@ public class CartaoClient {
         return cartaoCriado.convert();
     }
 
-    public Bloqueio bloqueiaCartao(Cartao cartao, String responsavel){
-        CartaoResponseFeign cartaoResponseFeign = null;
-
-        try {
-            cartaoResponseFeign = cartaoFeign.bloqueaCartao(cartao.getIdExterno(), new BloqueioRequestFeign(responsavel));
-        }catch (FeignException.UnprocessableEntity exception){
-            try{
-                String body = exception.contentUTF8();
-                cartaoResponseFeign = objectMapper.readValue(body, CartaoResponseFeign.class);
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-            }
-        }
+    public Optional<Bloqueio> bloqueiaCartao(Cartao cartao, String responsavel){
+        CartaoResponseFeign cartaoResponseFeign = cartaoFeign.bloqueaCartao(cartao.getIdExterno(), new BloqueioRequestFeign(responsavel));
         if(cartaoResponseFeign.getResultado().equals(BLOQUEADO)){
-            return new Bloqueio(responsavel, cartao);
+            return Optional.of(new Bloqueio(responsavel, cartao));
         }
-        return null;
+        return Optional.empty();
     }
 
 
-    public AvisoViagem criaAvisoViagemCartao(Cartao cartao, AvisoViagemPersist avisoViagemPersist, String responsavel, String ip){
-        CartaoResponseFeign cartaoResponseFeign = null;
-
-        try {
-            cartaoResponseFeign = cartaoFeign.criaAvisoViagem(cartao.getIdExterno(), avisoViagemPersist);
-        }catch (FeignException.UnprocessableEntity exception){
-            try{
-                String body = exception.contentUTF8();
-                cartaoResponseFeign = objectMapper.readValue(body, CartaoResponseFeign.class);
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-            }
-        }
+    public Optional<AvisoViagem> criaAvisoViagemCartao(Cartao cartao, AvisoViagemPersist avisoViagemPersist, String responsavel, String ip){
+        CartaoResponseFeign cartaoResponseFeign = cartaoFeign.criaAvisoViagem(cartao.getIdExterno(), avisoViagemPersist);
         if(cartaoResponseFeign.getResultado().equals(CRIADO)){
-            return new AvisoViagem(cartao, avisoViagemPersist, responsavel, ip);
+            return Optional.of(new AvisoViagem(cartao, avisoViagemPersist, responsavel, ip));
         }
-        return null;
+        return Optional.empty();
     }
 
-    public Carteira criaCarteiraCartao(Cartao cartao, CarteiraCartaoRequest request){
-        CarteiraResponseFeign response = null;
-        try {
-            response = cartaoFeign.criaCarteira(cartao.getIdExterno(), new CarteiraRequestFeign(request));
-        }catch (FeignException.UnprocessableEntity exception){
-            try{
-                String body = exception.contentUTF8();
-                response = objectMapper.readValue(body, CarteiraResponseFeign.class);
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-            }
-        }
+    public Optional<Carteira> criaCarteiraCartao(Cartao cartao, CarteiraCartaoRequest request){
+        CarteiraResponseFeign response = cartaoFeign.criaCarteira(cartao.getIdExterno(), new CarteiraRequestFeign(request));
         if(response.getResultado().equals(ASSOCIADA)){
-            return new Carteira(cartao, request, response.getId());
+            return Optional.of(new Carteira(cartao, request, response.getId()));
         }
-        return null;
+        return Optional.empty();
     }
 }

@@ -1,5 +1,6 @@
 package br.com.zup.desafios.proposta.proposta;
 
+import br.com.zup.desafios.proposta.externo.solicitacao.SolicitacaoFeign;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,11 +22,11 @@ import static br.com.zup.desafios.proposta.utils.Path.ID;
 public class PropostaController {
 
     private final PropostaRepository propostaRepository;
-    private final SolicitacaoClient solicitacaoClient;
+    private final SolicitacaoFeign solicitacaoFeign;
 
-    public PropostaController(PropostaRepository propostaRepository, SolicitacaoClient solicitacaoClient) {
+    public PropostaController(PropostaRepository propostaRepository, SolicitacaoFeign solicitacaoFeign) {
         this.propostaRepository = propostaRepository;
-        this.solicitacaoClient = solicitacaoClient;
+        this.solicitacaoFeign = solicitacaoFeign;
     }
 
     @PostMapping
@@ -33,7 +34,7 @@ public class PropostaController {
         if(propostaRepository.existsByDocumento(propostaPersist.getDocumento()))
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
 
-        Proposta proposta = propostaRepository.save(propostaPersist.convert()).solicita(solicitacaoClient, propostaRepository);
+        Proposta proposta = propostaRepository.save(propostaPersist.convert()).solicita(solicitacaoFeign, propostaRepository);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(proposta.getId()).toUri();

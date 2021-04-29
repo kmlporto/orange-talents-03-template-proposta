@@ -11,7 +11,7 @@ import static br.com.zup.desafios.proposta.utils.Path.AVISO;
 import static br.com.zup.desafios.proposta.utils.Path.BLOQUEIO;
 import static br.com.zup.desafios.proposta.utils.Path.CARTEIRA;
 
-@FeignClient(url = "${externo.cartao}", name="cartao", configuration = FeignTracingAutoConfiguration.class)
+@FeignClient(url = "${externo.cartao}", name="cartao", configuration = {FeignTracingAutoConfiguration.class})
 public interface CartaoFeign {
 
     @PostMapping

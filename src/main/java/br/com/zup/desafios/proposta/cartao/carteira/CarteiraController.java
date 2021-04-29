@@ -15,7 +15,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.Objects;
 
 import static br.com.zup.desafios.proposta.utils.Path.CARTAO;
 import static br.com.zup.desafios.proposta.utils.Path.CARTEIRA;
@@ -41,10 +40,8 @@ public class CarteiraController {
         }
         Cartao cartao = cartaoRepository.findByIdExterno(id);
 
-        Carteira carteira = cartaoClient.criaCarteiraCartao(cartao, carteiraCartaoRequest);
-
-        if(Objects.isNull(carteira))
-            throw new ApiErrorException(HttpStatus.UNPROCESSABLE_ENTITY, "Cartão já associado com essa carteira");
+        Carteira carteira = cartaoClient.criaCarteiraCartao(cartao, carteiraCartaoRequest)
+                .orElseThrow(() -> new ApiErrorException(HttpStatus.UNPROCESSABLE_ENTITY, "Cartão já associado com essa carteira"));
 
         carteira = carteiraRepository.save(carteira);
 

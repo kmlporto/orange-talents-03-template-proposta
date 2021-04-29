@@ -6,10 +6,14 @@ import br.com.zup.desafios.proposta.config.handler.ApiErrorException;
 import br.com.zup.desafios.proposta.cartao.CartaoClient;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.Objects;
 
 import static br.com.zup.desafios.proposta.utils.Path.AVISO;
 import static br.com.zup.desafios.proposta.utils.Path.CARTAO;
@@ -33,9 +37,8 @@ public class AvisoController {
         }
         Cartao cartao = cartaoRepository.findByIdExterno(id);
 
-        AvisoViagem aviso = cartaoClient.criaAvisoViagemCartao(cartao, avisoViagemPersist, userAgent, ipClient);
-        if(Objects.isNull(aviso))
-            throw new ApiErrorException(HttpStatus.UNPROCESSABLE_ENTITY, "Não foi possível adicionar aviso de viagem");
+        AvisoViagem aviso = cartaoClient.criaAvisoViagemCartao(cartao, avisoViagemPersist, userAgent, ipClient)
+                .orElseThrow(() -> new ApiErrorException(HttpStatus.UNPROCESSABLE_ENTITY, "Não foi possível adicionar aviso de viagem"));
 
         cartao.addAviso(aviso);
 
